@@ -14,19 +14,30 @@ The application processes standard GTFS data, making it compatible with thousand
 ## Architecture
 
 ```
-┌─────────────────┐     HTTP/JSON      ┌─────────────────┐
-│                 │ ◄───────────────► │                 │
-│   Mobile App    │                    │   Go Backend    │
-│  (React Native) │                    │   (REST API)    │
+┌─────────────────┐                    ┌─────────────────┐
 │                 │                    │                 │
-└─────────────────┘                    └────────┬────────┘
-                                                │
-                                                ▼
-                                       ┌─────────────────┐
-                                       │   GTFS Data     │
-                                       │  (stops, routes │
-                                       │   schedules)    │
-                                       └─────────────────┘
+│   Mobile App    │                    │  Web Dashboard  │
+│  (React Native) │                    │    (Next.js)    │
+│                 │                    │                 │
+└────────┬────────┘                    └────────┬────────┘
+         │                                      │
+         │            HTTP/JSON                 │
+         └──────────────┬───────────────────────┘
+                        │
+                        ▼
+               ┌─────────────────┐
+               │                 │
+               │   Go Backend    │
+               │   (REST API)    │
+               │                 │
+               └────────┬────────┘
+                        │
+                        ▼
+               ┌─────────────────┐
+               │   GTFS Data     │
+               │  (stops, routes │
+               │   schedules)    │
+               └─────────────────┘
 ```
 
 ## Tech Stack
@@ -38,6 +49,14 @@ The application processes standard GTFS data, making it compatible with thousand
 | **React Native** | Cross-platform mobile development |
 | **MapLibre GL** | Open-source map rendering |
 | **TypeScript** | Type-safe development |
+
+### Web Dashboard (Next.js)
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 14** | React framework with App Router |
+| **shadcn/ui** | Modern UI components |
+| **MapLibre GL JS** | Web map rendering |
+| **TanStack Query** | Data fetching and caching |
 
 ### Backend (Go)
 | Technology | Purpose |
@@ -66,6 +85,11 @@ transport-app/
 │   │   └── router/         # Route calculation (CSA)
 │   └── pkg/models/         # Shared data models
 ├── mobile/                  # React Native Expo app
+├── web/                     # Next.js dev dashboard
+│   └── src/
+│       ├── app/            # Next.js App Router pages
+│       ├── components/     # React components
+│       └── lib/            # Utilities and API client
 ├── data/
 │   └── gtfs/               # GTFS feed files
 ├── docs/
@@ -79,7 +103,7 @@ transport-app/
 
 ### Prerequisites
 - **Go 1.21+** for backend development
-- **Node.js 18+** and npm for mobile development
+- **Node.js 18+** and npm for frontend development
 - **Expo CLI** for React Native development
 
 ### Backend Setup
@@ -91,6 +115,16 @@ go run ./cmd/api/
 ```
 
 The server starts at `http://localhost:8080`
+
+### Web Dashboard Setup
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) for the dev dashboard.
 
 ### Mobile Setup
 
