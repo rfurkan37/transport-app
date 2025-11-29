@@ -1,0 +1,45 @@
+# Environment Variables
+.env
+.env.local
+*.env
+
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies (handled in subdirectories)
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Data files (optional - you might want to track sample data)
+data/gtfs/*.txt
+data/gtfs/*.zip
+!data/sample/*.txt
+
+# Temporary files
+tmp/
+temp/
+*.tmp
